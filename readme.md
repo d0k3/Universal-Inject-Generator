@@ -11,3 +11,5 @@ This is how it works:
 * To inject, rename inject-ready .app to hs.app, put it into the root of your 3DS SD card and inject via Decrypt9
 
 You should always generate your inject-ready .apps yourself and never take ones from other persons. There might be a version mismatch in the H&S app, leading to it not working otherwise.
+
+Discuss this script here: http://gbatemp.net/threads/project-injecting-any-app-into-health-and-safety.401697/
