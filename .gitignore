@@ -1,4 +1,5 @@
 # Custom ignore files
+work/
 *.app
 *.cia
 *.zip
