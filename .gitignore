@@ -1,3 +1,9 @@
+# Custom ignore files
+*.app
+*.cia
+*.zip
+*.7z
+
 # Windows image file caches
 Thumbs.db
 ehthumbs.db
