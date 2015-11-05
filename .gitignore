@@ -2,8 +2,8 @@
 work/
 *.app
 *.cia
-*.zip
-*.7z
+/*.zip
+/*.7z
 
 # Windows image file caches
 Thumbs.db
