@@ -29,7 +29,7 @@ tools/3dstool-linux -c -z -t exefs -f work/hs_mod_banner_exefs.bin --exefs-dir w
 
 printf "[+] GENERATE NEW ROMFS\n"
 mkdir work/dummy_romfs
-dd if=/dev/zero of=work/dummy_romfs/dummy.bin bs=1 count=16
+cp tools/dummy.bin work/dummy_romfs/dummy.bin
 tools/3dstool-linux -c -t romfs -f work/dummy_romfs.bin --romfs-dir work/dummy_romfs
 
 printf "[+] MERGE EXHEADER\n"
