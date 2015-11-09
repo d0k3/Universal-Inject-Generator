@@ -1,8 +1,7 @@
 @echo off
 
 echo [!] --- UNIVERSAL INJECT GENERATOR V0.3 ---
-echo .
-echo .
+echo.
 
 echo.
 echo [+] IDENTIFY FILES TO WORK WITH
@@ -33,7 +32,7 @@ tools\3dstool -c -z -t exefs -f work\hs_mod_banner_exefs.bin --exefs-dir work\hs
 echo.
 echo [+] GENERATE NEW ROMFS
 md work\dummy_romfs
-fsutil file createnew work\dummy_romfs\dummy.bin 16
+copy /y /v tools\dummy.bin work\dummy_romfs\dummy.bin
 tools\3dstool -c -t romfs -f work\dummy_romfs.bin --romfs-dir work\dummy_romfs
 
 echo.
@@ -52,3 +51,5 @@ echo [+] HS APP INJECT (N) SIZE: %HS_INJECT_N_SIZE% byte
 if HS_ORIGINAL_SIZE LSS HS_INJECT_N_SIZE (echo [!] INJECT APP IS BIGGER THAN HS APP)
 echo [+] HS APP INJECT (B) SIZE: %HS_INJECT_B_SIZE% byte
 if HS_ORIGINAL_SIZE LSS HS_INJECT_B_SIZE (echo [!] INJECT APP IS BIGGER THAN HS APP)
+echo.
+echo.
