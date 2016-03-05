@@ -2,13 +2,10 @@
 
 echo [!] --- UNIVERSAL INJECT GENERATOR V0.3 ---
 echo.
-
+echo [+] CLEAR WORKING DIRECTORY
+rd /s /q work
 echo.
 echo [+] IDENTIFY FILES TO WORK WITH
-ren work work_old
-del /s /q work_old
-rd /s /q work_old
-del /q hs.*
 md work
 copy /y /v %2 work\hs.app
 tools\ctrtool -x --contents work\ciacnt %1
@@ -41,15 +38,16 @@ tools\MergeExHeader work\inject_exhdr.bin work\hs_exhdr.bin work\merge_exhdr.bin
 
 echo.
 echo [+] REBUILD HS INJECT APP
-if exist work\hs_logo.bin (tools\3dstool -c -t cxi -f %~n1_inject_no_banner.app --header work\hs_hdr.bin --exh work\merge_exhdr.bin --plain work\hs_plain.bin --logo work\hs_logo.bin --exefs work\hs_mod_exefs.bin --romfs work\dummy_romfs.bin) else (tools\3dstool -c -t cxi -f %~n1_inject_no_banner.app --header work\hs_hdr.bin --exh work\merge_exhdr.bin --plain work\hs_plain.bin --exefs work\hs_mod_exefs.bin --romfs work\dummy_romfs.bin)
-if exist work\hs_logo.bin (tools\3dstool -c -t cxi -f %~n1_inject_with_banner.app --header work\hs_hdr.bin --exh work\merge_exhdr.bin --plain work\hs_plain.bin --logo work\hs_logo.bin --exefs work\hs_mod_banner_exefs.bin --romfs work\dummy_romfs.bin) else (tools\3dstool -c -t cxi -f %~n1_inject_with_banner.app --header work\hs_hdr.bin --exh work\merge_exhdr.bin --plain work\hs_plain.bin --exefs work\hs_mod_banner_exefs.bin --romfs work\dummy_romfs.bin)
+if exist work\hs_logo.bin (tools\3dstool -c -t cxi -f "%~n1_inject_no_banner.app" --header work\hs_hdr.bin --exh work\merge_exhdr.bin --plain work\hs_plain.bin --logo work\hs_logo.bin --exefs work\hs_mod_exefs.bin --romfs work\dummy_romfs.bin) else (tools\3dstool -c -t cxi -f %~n1_inject_no_banner.app --header work\hs_hdr.bin --exh work\merge_exhdr.bin --plain work\hs_plain.bin --exefs work\hs_mod_exefs.bin --romfs work\dummy_romfs.bin)
+if exist work\hs_logo.bin (tools\3dstool -c -t cxi -f "%~n1_inject_with_banner.app" --header work\hs_hdr.bin --exh work\merge_exhdr.bin --plain work\hs_plain.bin --logo work\hs_logo.bin --exefs work\hs_mod_banner_exefs.bin --romfs work\dummy_romfs.bin) else (tools\3dstool -c -t cxi -f %~n1_inject_with_banner.app --header work\hs_hdr.bin --exh work\merge_exhdr.bin --plain work\hs_plain.bin --exefs work\hs_mod_banner_exefs.bin --romfs work\dummy_romfs.bin)
 for %%i in (work\hs.app) do set HS_ORIGINAL_SIZE=%%~zi
-for %%i in (%~n1_inject_no_banner.app) do set HS_INJECT_N_SIZE=%%~zi
-for %%i in (%~n1_inject_with_banner.app) do set HS_INJECT_B_SIZE=%%~zi
+for %%i in ("%~n1_inject_no_banner.app") do set HS_INJECT_N_SIZE=%%~zi
+for %%i in ("%~n1_inject_with_banner.app") do set HS_INJECT_B_SIZE=%%~zi
 echo [+] HS APP ORIGINAL SIZE  : %HS_ORIGINAL_SIZE% byte
 echo [+] HS APP INJECT (N) SIZE: %HS_INJECT_N_SIZE% byte
 if HS_ORIGINAL_SIZE LSS HS_INJECT_N_SIZE (echo [!] INJECT APP IS BIGGER THAN HS APP)
 echo [+] HS APP INJECT (B) SIZE: %HS_INJECT_B_SIZE% byte
 if HS_ORIGINAL_SIZE LSS HS_INJECT_B_SIZE (echo [!] INJECT APP IS BIGGER THAN HS APP)
 echo.
+echo [!] --- OPERATION COMPLETE ---
 echo.
