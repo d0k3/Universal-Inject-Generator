@@ -29,7 +29,7 @@ mkdir work/dummy_romfs
 cp tools/dummy.bin work/dummy_romfs/dummy.bin
 ./tools/3dstool-$(uname) -c -t romfs -f work/dummy_romfs.bin --romfs-dir work/dummy_romfs &>/dev/null
 if [ ! -e work/inject_romfs.bin ]
-then mv work/dummy_romfs work/inject_romfs.bin
+then mv work/dummy_romfs.bin work/inject_romfs.bin
 fi
 
 printf "[+] MERGE EXHEADER\n"
