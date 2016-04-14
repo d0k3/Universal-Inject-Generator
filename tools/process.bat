@@ -28,7 +28,7 @@ echo [+] GENERATE DUMMY ROMFS
 md work\dummy_romfs
 copy /y /v tools\dummy.bin work\dummy_romfs\dummy.bin
 tools\3dstool -c -t romfs -f work\dummy_romfs.bin --romfs-dir work\dummy_romfs
-if not exist work\inject_romfs.bin ren work\dummy_romfs work\inject_romfs.bin
+if not exist work\inject_romfs.bin (ren work\dummy_romfs.bin inject_romfs.bin)
 
 echo.
 echo [+] MERGE EXHEADER
