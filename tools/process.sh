@@ -2,7 +2,7 @@
 
 clear
 
-printf " --- UNIVERSAL INJECT GENERATOR v0.5 ---\n"
+printf " --- UNIVERSAL INJECT GENERATOR v0.6 ---\n"
 printf "          --- LINUX EDITION --- \n\n\n"
 
 printf "[+] IDENTIFY FILES TO WORK WITH\n"
@@ -20,14 +20,11 @@ printf "[+] EXTRACT HS AND INJECT APP\n"
 ./tools/3dstool-$(uname) -x -f work/hs_exefs.bin --exefs-dir work/hs_exefs &>/dev/null
 ./tools/3dstool-$(uname) -x -f work/inject_exefs.bin --exefs-dir work/inject_exefs &>/dev/null
 
-printf "[+] GENERATE NEW EXEFS\n"
-cp work/inject_exefs/code.bin work/hs_exefs/code.bin
-./tools/3dstool-$(uname) -c -z -t exefs -f work/hs_mod_exefs.bin --exefs-dir work/hs_exefs --header work/hs_exefs.bin &>/dev/null
-cp work/inject_exefs/banner.bnr work/hs_exefs/banner.bnr
-cp work/inject_exefs/icon.icn work/hs_exefs/icon.icn
-./tools/3dstool-$(uname) -c -z -t exefs -f work/hs_mod_banner_exefs.bin --exefs-dir work/hs_exefs --header work/hs_exefs.bin &>/dev/null
+printf "[+] GENERATE NO BANNER EXEFS\n"
+cp work/hs_exefs/banner.bnr work/inject_exefs/banner.bnr
+./tools/3dstool-$(uname) -c -z -t exefs -f work/inject_no_banner_exefs.bin --exefs-dir work/inject_exefs --header work/inject_exefs.bin &>/dev/null
 
-printf "[+] GENERATE NEW ROMFS\n"
+printf "[+] GENERATE DUMMY ROMFS\n"
 mkdir work/dummy_romfs
 cp tools/dummy.bin work/dummy_romfs/dummy.bin
 ./tools/3dstool-$(uname) -c -t romfs -f work/dummy_romfs.bin --romfs-dir work/dummy_romfs &>/dev/null
@@ -41,13 +38,13 @@ printf "[+] MERGE EXHEADER\n"
 printf "[+] REBUILD HS INJECT APP\n"
 
 if [ -e work/hs_logo.bin ]
-then ./tools/3dstool-$(uname) -c -t cxi -f ${1%.*}_inject_no_banner.app --header work/hs_hdr.bin --exh work/merge_exhdr.bin --plain work/hs_plain.bin --logo work/hs_logo.bin --exefs work/hs_mod_exefs.bin --romfs work/inject_romfs.bin &>/dev/null
-else ./tools/3dstool-$(uname) -c -t cxi -f ${1%.*}_inject_no_banner.app --header work/hs_hdr.bin --exh work/merge_exhdr.bin --plain work/hs_plain.bin --exefs work/hs_mod_exefs.bin --romfs work/inject_romfs.bin &>/dev/null
+then ./tools/3dstool-$(uname) -c -t cxi -f ${1%.*}_inject_no_banner.app --header work/hs_hdr.bin --exh work/merge_exhdr.bin --plain work/hs_plain.bin --logo work/hs_logo.bin --exefs work/inject_no_banner_exefs.bin --romfs work/inject_romfs.bin &>/dev/null
+else ./tools/3dstool-$(uname) -c -t cxi -f ${1%.*}_inject_no_banner.app --header work/hs_hdr.bin --exh work/merge_exhdr.bin --plain work/hs_plain.bin --exefs work/inject_no_banner_exefs.bin --romfs work/inject_romfs.bin &>/dev/null
 fi
 
 if [ -e work/hs_logo.bin ]
-then ./tools/3dstool-$(uname) -c -t cxi -f ${1%.*}_inject_with_banner.app --header work/hs_hdr.bin --exh work/merge_exhdr.bin --plain work/hs_plain.bin --logo work/hs_logo.bin --exefs work/hs_mod_banner_exefs.bin --romfs work/inject_romfs.bin &>/dev/null
-else ./tools/3dstool-$(uname) -c -t cxi -f ${1%.*}_inject_with_banner.app --header work/hs_hdr.bin --exh work/merge_exhdr.bin --plain work/hs_plain.bin --exefs work/hs_mod_banner_exefs.bin --romfs work/inject_romfs.bin &>/dev/null
+then ./tools/3dstool-$(uname) -c -t cxi -f ${1%.*}_inject_with_banner.app --header work/hs_hdr.bin --exh work/merge_exhdr.bin --plain work/hs_plain.bin --logo work/hs_logo.bin --exefs work/inject_exefs.bin --romfs work/inject_romfs.bin &>/dev/null
+else ./tools/3dstool-$(uname) -c -t cxi -f ${1%.*}_inject_with_banner.app --header work/hs_hdr.bin --exh work/merge_exhdr.bin --plain work/hs_plain.bin --exefs work/inject_exefs.bin --romfs work/inject_romfs.bin &>/dev/null
 fi
 
 for i in work/hs.app; do HS_ORIGINAL_SIZE=$(ls -l $i | awk '{print $5}'); done
